@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # DAB103_Project1_Group7
+# # DAB103_Project01_Group07
 # 
 # ## Source link -
 # https://www.kaggle.com/debajyotipodder/co2-emission-by-vehicles?select=CO2+Emissions_Canada.csv
@@ -9,7 +9,6 @@
 # # **Importing Libraries**
 
 # In[1]:
-
 
 import os
 import pandas as pd
@@ -22,17 +21,15 @@ import missingno as msno
 
 # In[2]:
 
-
-path = 'D:\DAB\DAB-103 Analytic tools and decision making\Project\Proj1'
+path = 'D:\WorkSpace\DAB103\Project01\'
 os.chdir(path)
 
-Co2_Emissions_Data = pd.read_csv("CO2 Emissions_Canada.csv")
+Co2_Emissions_Data = pd.read_csv("CO2_Emissions_Canada.csv")
 
 
 # # **The Shape of the dataset is as follow**
 
 # In[3]:
-
 
 Co2_Emissions_Data.shape
 
@@ -43,7 +40,6 @@ Co2_Emissions_Data.shape
 # # **We are viewing the first few rows of dataset**
 
 # In[5]:
-
 
 Co2_Emissions_Data.head()
 
@@ -60,14 +56,12 @@ Co2_Emissions_Data.info()
 
 # In[5]:
 
-
 Co2_Emissions_Data.describe()
 
 
 # # **Missing values in data**
 
 # In[6]:
-
 
 Co2_Emissions_Data.isnull().sum()
 
@@ -93,7 +87,6 @@ plt.ylabel("Number of rows", fontsize=17,color = "Blue")
 
 # In[8]:
 
-
 Co2_Emissions_Data.duplicated().sum()
 
 
@@ -101,14 +94,12 @@ Co2_Emissions_Data.duplicated().sum()
 
 # In[9]:
 
-
 Co2_Emissions_Data.loc[Co2_Emissions_Data.duplicated(), :]
 
 
 # # **Finding the outliers by using box plot**
 
 # In[10]:
-
 
 ax = sns.boxplot(x="CO2 Emissions(g/km)", data = Co2_Emissions_Data)
 ax.set(xlabel="CO2 Emissions in gms/km")
@@ -121,7 +112,6 @@ plt.xlabel("Co2 emission in g/km",fontsize=17,color = "Blue")
 # # **Correlation between columns in our dataset**
 
 # In[11]:
-
 
 corr = Co2_Emissions_Data.corr()
 
@@ -148,7 +138,6 @@ plt.xlabel("Column Names",fontsize=17,color = "Blue")
 
 # In[12]:
 
-
 ax = sns.countplot(y ='Vehicle Class', data = Co2_Emissions_Data)
 ax.set_title("Number of vehicles for respective vehicle class", fontsize = 20,color ="Darkred")
 plt.xlabel("Count",fontsize=17,color = "DarkBlue")
@@ -162,7 +151,6 @@ plt.show()
 
 # In[13]:
 
-
 ax = sns.countplot(x ='Cylinders', data = Co2_Emissions_Data)
 ax.set_title("Count of cars using respective number of cylinders",color ="Darkred" ,fontsize = 20)
 plt.xlabel("Number of cylinders",fontsize=17,color = "DarkBlue")
@@ -175,7 +163,6 @@ plt.show()
 # ## Fuel Types used among number of cars
 
 # In[14]:
-
 
 ax = sns.countplot(x ='Fuel Type', data = Co2_Emissions_Data)
 ax.set_title("Count of cars using respective type of fuel ",color ="Darkred",fontsize = 20)
