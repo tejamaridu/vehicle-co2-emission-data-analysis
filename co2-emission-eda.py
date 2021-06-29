@@ -1,14 +1,15 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # DAB103_Project01_Group07
+# # DAB103_Project1_Group7
 # 
 # ## Source link -
 # https://www.kaggle.com/debajyotipodder/co2-emission-by-vehicles?select=CO2+Emissions_Canada.csv
 
 # # **Importing Libraries**
 
-# In[1]:
+# In[2]:
+
 
 import os
 import pandas as pd
@@ -19,17 +20,19 @@ import missingno as msno
 
 # # **Changing Directory and importing dataset**
 
-# In[2]:
+# In[4]:
 
-path = 'D:\WorkSpace\DAB103\Project01\'
+
+path = 'D:\DAB\DAB-103 Analytic tools and decision making\Project\Proj1'
 os.chdir(path)
 
-Co2_Emissions_Data = pd.read_csv("CO2_Emissions_Canada.csv")
+Co2_Emissions_Data = pd.read_csv("CO2 Emissions_Canada.csv")
 
 
 # # **The Shape of the dataset is as follow**
 
 # In[3]:
+
 
 Co2_Emissions_Data.shape
 
@@ -39,7 +42,8 @@ Co2_Emissions_Data.shape
 
 # # **We are viewing the first few rows of dataset**
 
-# In[5]:
+# In[3]:
+
 
 Co2_Emissions_Data.head()
 
@@ -56,12 +60,14 @@ Co2_Emissions_Data.info()
 
 # In[5]:
 
+
 Co2_Emissions_Data.describe()
 
 
 # # **Missing values in data**
 
 # In[6]:
+
 
 Co2_Emissions_Data.isnull().sum()
 
@@ -87,6 +93,7 @@ plt.ylabel("Number of rows", fontsize=17,color = "Blue")
 
 # In[8]:
 
+
 Co2_Emissions_Data.duplicated().sum()
 
 
@@ -94,24 +101,80 @@ Co2_Emissions_Data.duplicated().sum()
 
 # In[9]:
 
+
 Co2_Emissions_Data.loc[Co2_Emissions_Data.duplicated(), :]
 
 
+# # Data Segmentation
+
+# In[27]:
+
+
+transmission = Co2_Emissions_Data['Transmission'].sort_index()
+transmission.value_counts()
+
+
+# In[7]:
+
+
+engineSize = Co2_Emissions_Data['Model'].sort_index()
+engineSize.value_counts()
+
+
+# In[30]:
+
+
+Make = Co2_Emissions_Data['Make'].sort_index()
+Make.value_counts()
+
+
+# The above mentioned data respresents how the data segments are distributed accross the data. We have considered 3 features which are Transmission, Engine size and Makers Respectively.
+
 # # **Finding the outliers by using box plot**
 
-# In[10]:
+# In[8]:
+
 
 ax = sns.boxplot(x="CO2 Emissions(g/km)", data = Co2_Emissions_Data)
 ax.set(xlabel="CO2 Emissions in gms/km")
 ax.set_title("Box plot for checking outliers in CO2 emissions",color ="Darkred" ,fontsize = 20)
-plt.xlabel("Co2 emission in g/km",fontsize=17,color = "Blue")
+plt.xlabel("Co2 emission in (grams/km)",fontsize=17,color = "Blue")
 
 
 # From the above box plot we can infer that there is a single outlier in the given data, for which the co2 emission is above 500g/km .
 
+# In[5]:
+
+
+ax = sns.boxplot(x="Fuel Consumption City (L/100 km)", data = Co2_Emissions_Data)
+ax.set_title("Box plot for checking outliers of Fuel Consumption in City",color ="Darkred" ,fontsize = 20)
+plt.xlabel("Fuel Consumption in City (Litres/100 km)",fontsize=17,color = "Blue")
+
+
+# This box plot visualizes the mileage in city by different vehicles outliers.
+
+# In[6]:
+
+
+ax = sns.boxplot(x="Fuel Consumption Hwy (L/100 km)", data = Co2_Emissions_Data)
+ax.set_title("Box plot for checking outliers of Fuel Consumption in Highway",color ="Darkred" ,fontsize = 20)
+plt.xlabel("Fuel Consumption in Highway (Litres/100 km)",fontsize=17,color = "Blue")
+
+
+# This box plot visualizes the mileage on highway by different vehicles outliers.
+
 # # **Correlation between columns in our dataset**
 
+# In[32]:
+
+
+columns = ['CO2 Emissions(g/km)','Fuel Consumption City (L/100 km)']
+subset = Co2_Emissions_Data[columns]
+subset.corr()
+
+
 # In[11]:
+
 
 corr = Co2_Emissions_Data.corr()
 
@@ -130,13 +193,14 @@ ax.set_title("Plot for displaying correlation between various columns",color ="D
 plt.xlabel("Column Names",fontsize=17,color = "Blue")
 
 
-# In the above plot, Blue means positive and red means negitive. The darker the colour the stronger is the magnitude of correlation between them.
+# This heatmap gives a graphical    representation of the correlation between various features. In this plot, Blue means positive and red means negative. The darker the color the stronger is the magnitude of correlation between them.
 
 # # **Preliminary Visualizations**
 
 # ## Count of different Vehicle Class spread over data
 
 # In[12]:
+
 
 ax = sns.countplot(y ='Vehicle Class', data = Co2_Emissions_Data)
 ax.set_title("Number of vehicles for respective vehicle class", fontsize = 20,color ="Darkred")
@@ -151,6 +215,7 @@ plt.show()
 
 # In[13]:
 
+
 ax = sns.countplot(x ='Cylinders', data = Co2_Emissions_Data)
 ax.set_title("Count of cars using respective number of cylinders",color ="Darkred" ,fontsize = 20)
 plt.xlabel("Number of cylinders",fontsize=17,color = "DarkBlue")
@@ -163,6 +228,7 @@ plt.show()
 # ## Fuel Types used among number of cars
 
 # In[14]:
+
 
 ax = sns.countplot(x ='Fuel Type', data = Co2_Emissions_Data)
 ax.set_title("Count of cars using respective type of fuel ",color ="Darkred",fontsize = 20)
